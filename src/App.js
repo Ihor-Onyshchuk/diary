@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
-function App() {
-  return (
-    <div>
-      Hello!
-    </div>
-  );
+export default class App extends PureComponent {
+  render() {
+    return (
+      <div className="container">
+        Hello
+      </div>
+    )
+  }
 }
-
-export default App;
