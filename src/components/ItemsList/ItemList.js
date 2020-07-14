@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../index.scss';
+
 const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) => {
   return (
     <div>
@@ -17,7 +19,7 @@ const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) =
                   {name}
                 </span>
                 <div className="d-flex align-items-center">
-                  <i className="fa fa-commenting-o mr-2">{comments.length}</i>
+                  <i className="fa fa-commenting-o mx-2"> {comments.length}</i>
                   <button
                     type="button"
                     onClick={() => handleItemDelete(id)}

@@ -5,12 +5,15 @@ const Form = ({ name, value, onChange, onSubmit, color, colorField }) => {
     <div>
       <form className="form-inline" onSubmit={onSubmit}>
         <div className="form-group my-3">
-          {name === 'comment' && <input
-            type="color"
-            name={colorField}
-            value={color}
-            onChange={onChange}
-          />}
+          {name === 'comment' && (
+            <input
+              type="color"
+              value={color}
+              className="mr-2"
+              name={colorField}
+              onChange={onChange}
+            />
+          )}
           <input
             type="text"
             name={name}
@@ -19,7 +22,7 @@ const Form = ({ name, value, onChange, onSubmit, color, colorField }) => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary mb-2">
+        <button type="submit" className="btn btn-primary ml-2">
           Add {name === 'comment' ? 'Comment' : 'New'}
         </button>
       </form>

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import ItemsList from './components/ItemsList/ItemList';
 import Form from './components/Form/Form';
+import ItemsList from './components/ItemsList/ItemList';
 import CommentsList from './components/CommentsList/CommentsList';
 
 const getStorageItem = key => {
@@ -111,13 +111,13 @@ export default class App extends PureComponent {
   render() {
     const { name, comment, items, activeItem, commentColor } = this.state;
     return (
-      <div className="container h-100">
+      <div className="container-fluid h-100">
         <div className="row h-100">
-          <div className="col-4 bg-dark">
+          <div className="col-2 bg-dark">
             <h1 className="text-center text-light">Dialy app</h1>
           </div>
-          <div className="col-8">
-            <div className="d-flex justify-content-between flex-wrap flex-lg-nowrap my-3">
+          <div className="col-10">
+            <div className="d-flex justify-content-center flex-wrap my-3">
               <div className="shadow border p-3 m-3">
                 <h3>Items</h3>
                 <Form
