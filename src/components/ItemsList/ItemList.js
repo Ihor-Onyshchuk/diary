@@ -1,5 +1,4 @@
 import React from 'react';
-import cx from 'classnames';
 
 const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) => {
   return (
@@ -11,7 +10,6 @@ const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) =
             <li
               key={id}
               onClick={() => (isActive ? null : handleItemClick(id))}
-              // className={cx('list-group-item', { active: 'isActive' })}
               className={`list-group-item ${isActive ? 'active' : ''}`}
             >
               <div className="d-flex justify-content-between align-items-center">
@@ -33,7 +31,7 @@ const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) =
           )
         })}
       </ul>
-    </div>
+    </div >
   )
 };
 
