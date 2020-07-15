@@ -17,7 +17,6 @@ export default class App extends PureComponent {
   componentDidMount = () => {
     const items = getStorageItem('items');
     this.setState({ items });
-    console.log('storage Items', items)
   }
 
   handleInputChange = (e) => {
@@ -28,7 +27,6 @@ export default class App extends PureComponent {
 
   handleItemSubmit = (e) => {
     e.preventDefault();
-
     const { name, items } = this.state;
     const itemsList = [createItem(name), ...items];
     setStorageItem('items', itemsList);
@@ -66,7 +64,7 @@ export default class App extends PureComponent {
       commentColor,
     } = this.state;
 
-    const idx = items.findIndex(({ id }) => id === activeItem.id)
+    const idx = items.findIndex(({ id }) => id === activeItem.id);
     const activeStorageItem = items.find(({ id }) => id === activeItem.id);
 
     activeStorageItem.comments = [
