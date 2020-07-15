@@ -1,11 +1,6 @@
 import React from 'react';
 
 const CommentsList = ({ comments }) => {
-  const style = {
-    width: '20px',
-    height: '20px',
-    background: '#000'
-  }
   return (
     <div>
       <ul className="list-group">
@@ -16,7 +11,7 @@ const CommentsList = ({ comments }) => {
                 <span className="mr-2 d-block" style={{
                   width: '20px',
                   height: '20px',
-                  'background-color': color
+                  backgroundColor: color
                 }} />
               </span>
               <div className="d-flex align-items-center">

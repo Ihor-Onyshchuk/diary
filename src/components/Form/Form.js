@@ -2,7 +2,7 @@ import React from "react";
 
 const Form = ({ name, value, onChange, onSubmit, color, colorField }) => {
   return (
-    <div>
+    <div className="mb-2">
       <form className="form-inline" onSubmit={onSubmit}>
         <div className="form-group my-3">
           {name === 'comment' && (

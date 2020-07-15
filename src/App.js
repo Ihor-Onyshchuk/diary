@@ -3,13 +3,7 @@ import React, { PureComponent } from 'react';
 import Form from './components/Form/Form';
 import ItemsList from './components/ItemsList/ItemList';
 import CommentsList from './components/CommentsList/CommentsList';
-
-const getStorageItem = key => {
-  const storageItem = localStorage.getItem(key);
-  return storageItem ? JSON.parse(storageItem) : [];
-};
-
-const itemId = () => `#${Date.now().toString(16)}`;
+import { createItem, createComments, getStorageItem, setStorageItem } from './utils';
 
 export default class App extends PureComponent {
   state = {
@@ -18,22 +12,6 @@ export default class App extends PureComponent {
     commentColor: '#000',
     activeItem: {},
     items: []
-  }
-
-  createItem = (name) => {
-    return {
-      id: itemId(),
-      name,
-      comments: []
-    }
-  }
-
-  createComments = (text, color) => {
-    return {
-      id: itemId(),
-      text,
-      color
-    }
   }
 
   componentDidMount = () => {
@@ -50,10 +28,10 @@ export default class App extends PureComponent {
 
   handleItemSubmit = (e) => {
     e.preventDefault();
-    const { name, items } = this.state;
-    const itemsList = [this.createItem(name), ...items];
-    localStorage.setItem('items', JSON.stringify(itemsList));
 
+    const { name, items } = this.state;
+    const itemsList = [createItem(name), ...items];
+    setStorageItem('items', itemsList);
     const storageItems = getStorageItem('items');
 
     this.setState({
@@ -66,7 +44,7 @@ export default class App extends PureComponent {
     const items = getStorageItem('items');
     const idx = items.findIndex(el => el.id === itemId);
     const newArray = [...items.slice(0, idx), ...items.slice(idx + 1)];
-    localStorage.setItem('items', JSON.stringify(newArray));
+    setStorageItem('items', newArray);
 
     this.setState({
       activeItem: {},
@@ -92,14 +70,13 @@ export default class App extends PureComponent {
     const activeStorageItem = items.find(({ id }) => id === activeItem.id);
 
     activeStorageItem.comments = [
-      this.createComments(comment, commentColor),
+      createComments(comment, commentColor),
       ...activeItem.comments
     ]
     const updatedItems = [
       ...items.slice(0, idx), activeStorageItem, ...items.slice(idx + 1)
     ]
-
-    localStorage.setItem('items', JSON.stringify(updatedItems));
+    setStorageItem('items', updatedItems);
 
     this.setState({
       comment: '',
