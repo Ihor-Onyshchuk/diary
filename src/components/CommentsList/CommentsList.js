@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CommentsList = ({ comments }) => (
-  <ul className="list-group">
+  <ul className="">
     {comments && comments.map(({ text, color, id }) => (
       <li key={id} className="list-group-item">
         <div className="d-flex align-items-center">

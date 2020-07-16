@@ -13,14 +13,14 @@ const ItemsList = ({ items, handleItemDelete, handleItemClick, activeItemId }) =
           className={`list-group-item ${isActive ? 'active' : ''}`}
         >
           <div className="d-flex justify-content-between align-items-center">
-            <span className="align-middle">
+            <span className="align-middle" >
               {name}
             </span>
             <div className="d-flex align-items-center">
               <i className="fa fa-commenting-o mx-2"> {comments.length}</i>
               <button
                 type="button"
-                onClick={() => handleItemDelete(id)}
+                onClick={(e) => handleItemDelete(e, id)}
                 className="btn btn-outline-danger btn-sm float-right"
               >
                 <i className="fa fa-trash-o" />

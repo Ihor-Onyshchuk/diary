@@ -9,9 +9,10 @@ export default class App extends PureComponent {
   state = {
     name: '',
     comment: '',
+    isActive: false,
     commentColor: '#000',
     activeItem: {},
-    items: []
+    items: [],
   }
 
   componentDidMount = () => {
@@ -28,31 +29,43 @@ export default class App extends PureComponent {
   handleItemSubmit = (e) => {
     e.preventDefault();
     const { name, items } = this.state;
+    if (name === '') return;
     const itemsList = [createItem(name), ...items];
+
     setStorageItem('items', itemsList);
     const storageItems = getStorageItem('items');
 
     this.setState({
       name: '',
-      items: storageItems
+      comment: '',
+      items: storageItems,
+      commentColor: '#000',
     })
   }
 
-  handleItemDelete = (itemId) => {
+  handleItemDelete = (e, itemId) => {
+    e.stopPropagation();
     const items = getStorageItem('items');
     const idx = items.findIndex(el => el.id === itemId);
     const newArray = [...items.slice(0, idx), ...items.slice(idx + 1)];
+
     setStorageItem('items', newArray);
+    const updatedItems = getStorageItem('items');
 
     this.setState({
+      comment: '',
       activeItem: {},
-      items: getStorageItem('items')
+      items: updatedItems,
+      commentColor: '#000'
     })
   }
 
   handleItemClick = (itemId) => {
     const activeItem = this.state.items.find(({ id }) => id === itemId);
-    this.setState({ activeItem });
+    this.setState({
+      activeItem,
+      isActive: true
+    });
   }
 
   handleCommentSubmit = (e) => {
@@ -60,31 +73,42 @@ export default class App extends PureComponent {
     const {
       items,
       comment,
-      activeItem,
+      isActive,
+      activeItem: { id: activeItemId, comments },
       commentColor,
     } = this.state;
 
-    const idx = items.findIndex(({ id }) => id === activeItem.id);
-    const activeStorageItem = items.find(({ id }) => id === activeItem.id);
+    if (comment === '' || !isActive) return;
+
+    const idx = items.findIndex(({ id }) => id === activeItemId);
+    const activeStorageItem = items.find(({ id }) => id === activeItemId);
 
     activeStorageItem.comments = [
       createComments(comment, commentColor),
-      ...activeItem.comments
+      ...comments
     ]
-    const updatedItems = [
+    setStorageItem('items', [
       ...items.slice(0, idx), activeStorageItem, ...items.slice(idx + 1)
-    ]
-    setStorageItem('items', updatedItems);
+    ])
+    const updatedItems = getStorageItem('items');
 
     this.setState({
       comment: '',
-      activeItem: activeStorageItem,
-      items: getStorageItem('items'),
+      commentColor: '#000',
+      items: updatedItems,
+      activeItem: items[idx],
     })
   }
 
   render() {
-    const { name, comment, items, activeItem, commentColor } = this.state;
+    const {
+      name,
+      comment,
+      items,
+      isActive,
+      commentColor,
+      activeItem: { id, comments },
+    } = this.state;
     return (
       <div className="container-fluid h-100">
         <div className="row h-100">
@@ -93,37 +117,42 @@ export default class App extends PureComponent {
           </div>
           <div className="col-10">
             <div className="d-flex justify-content-center flex-wrap my-3">
-              <div className="shadow border p-3 m-3">
-                <h3>Items</h3>
-                <Form
-                  value={name}
-                  name='name'
-                  onChange={this.handleInputChange}
-                  onSubmit={this.handleItemSubmit}
-                />
-                <ItemsList
-                  items={items}
-                  activeItemId={activeItem.id}
-                  handleItemDelete={this.handleItemDelete}
-                  handleItemClick={this.handleItemClick}
-                />
+              <div className="m-3">
+                <div className="shadow border p-3">
+                  <h3>Items</h3>
+                  <Form
+                    name='name'
+                    value={name}
+                    onChange={this.handleInputChange}
+                    onSubmit={this.handleItemSubmit}
+                  />
+                  <ItemsList
+                    items={items}
+                    activeItemId={id}
+                    handleItemDelete={this.handleItemDelete}
+                    handleItemClick={this.handleItemClick}
+                  />
+                </div>
               </div>
-              <div className="shadow border p-3 m-3">
-                <h3>Comments: {activeItem.id}</h3>
-                <Form
-                  name='comment'
-                  value={comment}
-                  colorField='commentColor'
-                  color={commentColor}
-                  onChange={this.handleInputChange}
-                  onSubmit={this.handleCommentSubmit}
-                />
-                <CommentsList comments={activeItem.comments} />
+              <div className="m-3">
+                <div className="shadow border p-3">
+                  <h3>Comments {id}</h3>
+                  <Form
+                    name='comment'
+                    value={comment}
+                    isActive={isActive}
+                    color={commentColor}
+                    colorField='commentColor'
+                    onChange={this.handleInputChange}
+                    onSubmit={this.handleCommentSubmit}
+                  />
+                  <CommentsList comments={comments} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }

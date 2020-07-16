@@ -26,6 +26,6 @@ const Form = ({ name, value, onChange, onSubmit, color, colorField }) => (
       </button>
     </form>
   </div>
-)
+);
 
 export default Form;
