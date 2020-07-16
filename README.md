@@ -18,4 +18,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 > Open [Live demo]()
 
-![cover for app](https://github.com/Ihor-Onyshchuk/chuck-jokes/blob/master/preview.jpg 'preview')
+![cover for app](https://github.com/Ihor-Onyshchuk/diary/blob/master/preview.jpg 'preview')
