@@ -1,6 +1,7 @@
 # Diary
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Diary application allows you to create or remove items and add comments to them, and then save it in the browser storage
 
 ## Getting started
 
